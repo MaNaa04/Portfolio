@@ -3,8 +3,14 @@ import ClientGitHubCalendar from './ClientGitHubCalendar';
 
 async function fetchGitHubData(username: string) {
   try {
+    const headers: Record<string, string> = {};
+    if (process.env.GITHUB_TOKEN) {
+      headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
+
     // 1. Fetch repos to get total count and sum up all commits
     const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`, {
+      headers,
       next: { revalidate: 3600 },
     });
 
@@ -19,6 +25,7 @@ async function fetchGitHubData(username: string) {
       const commitPromises = repos.map(async (repo: { name: string }) => {
         try {
           const res = await fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`, {
+            headers,
             next: { revalidate: 3600 }
           });
           if (res.ok) {
@@ -46,6 +53,7 @@ async function fetchGitHubData(username: string) {
       `https://api.github.com/search/commits?q=author:${username}&sort=author-date&order=desc&per_page=5`,
       {
         headers: {
+          ...headers,
           Accept: "application/vnd.github.cloak-preview",
         },
         next: { revalidate: 3600 },
@@ -78,9 +86,9 @@ async function fetchGitHubData(username: string) {
 
     if (commits.length === 0) {
       commits.push({
-        repo: "portfolio",
-        message: "No recent public commits found.",
-        time: "Recently",
+        repo: "system",
+        message: commitsRes.status === 403 ? "GitHub API rate limit exceeded." : "No recent public commits found.",
+        time: "Just now",
       });
     }
 
