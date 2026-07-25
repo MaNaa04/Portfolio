@@ -73,12 +73,12 @@ export default function SkillsSection() {
       <SectionHeading number="05" title="Stack" />
 
       <div className="mt-8 space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {topRow.map((cat) => (
             <SkillCard key={cat.label} category={cat} />
           ))}
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {bottomRow.map((cat) => (
             <SkillCard key={cat.label} category={cat} />
           ))}
