@@ -103,7 +103,7 @@ export default function Sidebar() {
         {/* Avatar + Identity */}
         <div className="mb-6">
           {/* Avatar */}
-          <div className="relative w-24 h-24 rounded-2xl overflow-hidden mb-4 border border-[#222222] group">
+          <div className="relative w-24 h-24 rounded-full overflow-hidden mb-4 border border-[#222222] group">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/profile.jpg?v=1" 
