@@ -105,7 +105,7 @@ async function fetchLeetCodeData(username: string) {
     }
 
     // Process recent submissions
-    const submissions = recent.slice(0, 5).map((sub) => {
+    const submissions = recent.slice(0, 5).map((sub: { title: string, titleSlug: string, timestamp: string, statusDisplay: string, lang: string }) => {
       // Calculate time ago
       const diff = Math.floor(Date.now() / 1000) - parseInt(sub.timestamp);
       let timeStr = "";
