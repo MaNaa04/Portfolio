@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Mail, Trophy, Star, Award, Zap, X, Search, Download, ExternalLink } from "lucide-react";
+import { FileText, Mail, Trophy, Star, Award, Zap, X, Search, Download, ExternalLink, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -20,6 +20,7 @@ export default function Sidebar() {
   const roles = ["Software Developer", "Backend Engineer", "AI Engineer"];
   const [roleIndex, setRoleIndex] = useState(0);
   const [showResumeModal, setShowResumeModal] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const achievements = [
     {
@@ -98,8 +99,39 @@ export default function Sidebar() {
 
   return (
     <>
-    <aside className="fixed left-0 top-0 w-[320px] h-screen bg-black/40 backdrop-blur-md flex flex-col overflow-y-auto z-50">
-      <div className="flex flex-col flex-1 px-8 pt-8">
+      {/* Mobile Top Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#0A0A0A]/95 backdrop-blur-md border-b border-[#222222] z-40 flex items-center justify-between px-6">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full overflow-hidden border border-[#222222]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/profile.jpg?v=1" alt="Manas Pawar" className="w-full h-full object-cover" />
+          </div>
+          <span className="font-outfit font-medium text-[#E5E5E5]">Manas Pawar</span>
+        </div>
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+          className="p-1 text-[#A3A3A3] hover:text-[#E5E5E5] transition-colors"
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Backdrop Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Fixed Sidebar Drawer */}
+      <aside className={`fixed left-0 top-0 w-[280px] sm:w-[320px] h-screen bg-[#0A0A0A] lg:bg-black/40 lg:backdrop-blur-md flex flex-col overflow-y-auto z-50 transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+        <div className="flex flex-col flex-1 px-8 pt-8">
         {/* Avatar + Identity */}
         <div className="mb-6">
           {/* Avatar */}

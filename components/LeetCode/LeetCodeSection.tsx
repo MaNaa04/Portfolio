@@ -1,6 +1,6 @@
 import RecentSubmissionsMarquee from './RecentSubmissionsMarquee';
 
-const LC_COLS = 26;
+const LC_COLS = 52;
 const LC_ROWS = 7;
 
 function HeatmapCell({ level }: { level: number }) {
@@ -161,8 +161,8 @@ export default async function LeetCodeSection() {
       {/* Heatmap + Submissions */}
       <div className="w-full min-w-0">
         <h4 className="font-mono text-[11px] tracking-widest text-[#A3A3A3] uppercase mb-4">LeetCode</h4>
-        <div className="overflow-x-auto pb-2">
-          <div className="pt-[18px] w-max">
+        <div className="overflow-x-auto pb-2 flex">
+          <div className="pt-[18px] min-w-max">
             <Heatmap cols={LC_COLS} rows={LC_ROWS} data={heatmapData} />
             
             {/* Heatmap Legend */}

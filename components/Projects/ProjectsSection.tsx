@@ -42,10 +42,21 @@ const projects: Project[] = [
     tags: ["Spring Boot", "PostgreSQL", "Redis", "JGit", "Kafka"],
     githubUrl: "https://github.com/ssrade/Code_Archaeology_System",
   },
+  {
+    name: "Developer Portfolio",
+    status: "Live",
+    description:
+      "A minimalist, high-performance developer portfolio featuring a space-themed dark UI and dynamic GitHub/LeetCode data integration.",
+    detailedDescription:
+      "Engineered with Next.js and Tailwind CSS for optimal performance. Implemented smooth Framer Motion animations, a fully mobile-responsive architecture, and a dynamic GitHub and LeetCode statistical heatmap integration.",
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    githubUrl: "https://github.com/MaNaa04/Portfolio",
+    liveUrl: "https://manas04.vercel.app",
+  },
 ];
 
 function StatusBadge({ status }: { status: string }) {
-  const isProduction = status.includes("Production");
+  const isProduction = status.includes("Production") || status.includes("Live");
   const isWIP = status.includes("WIP");
   const isOpen = status.includes("Open");
 
@@ -120,7 +131,7 @@ export default function ProjectsSection() {
     <section id="projects" className="scroll-mt-24">
       <SectionHeading number="04" title="Selected Builds" />
 
-      <div className="mt-8 grid grid-cols-2 gap-4">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
         {projects.map((project) => (
           <ProjectCard 
             key={project.name} 

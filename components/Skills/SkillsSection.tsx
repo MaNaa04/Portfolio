@@ -26,7 +26,7 @@ const categories: SkillCategory[] = [
   {
     icon: <Bot size={16} />,
     label: "AI",
-    skills: ["AI Models", "RAG pipelines", "API calling", "AI Chatbots", "Prompt Engineering"],
+    skills: ["LLM", "RAG pipelines", "MCP", "Prompt Engineering"],
   },
   {
     icon: <Wrench size={16} />,

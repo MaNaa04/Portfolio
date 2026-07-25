@@ -22,13 +22,13 @@ export default function Home() {
       <Sidebar />
 
       {/* Main Scrollable Content */}
-      <main className="ml-[320px] flex-1 min-h-screen">
-        <div className="max-w-[1024px] px-16 py-16 space-y-[96px]">
+      <main className="w-full lg:w-auto lg:ml-[320px] flex-1 min-h-screen">
+        <div className="max-w-[1024px] px-6 pt-24 pb-12 md:px-16 md:pt-32 lg:pt-16 md:pb-16 space-y-20 md:space-y-[96px]">
           <Reveal><AboutSection /></Reveal>
           <Reveal>
             <section id="activity" className="space-y-8 min-w-0">
               <SectionHeading number="02" title="Technical Pulse" badge="ACTIVITY_&_CODE" />
-              <div className="grid grid-cols-2 gap-12">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-12">
                 <GitHubSection />
                 <LeetCodeSection />
               </div>
@@ -43,7 +43,7 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <footer className="px-16 pb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <footer className="px-6 md:px-16 pb-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-mono text-[11px] text-[#525252] tracking-[0.15em] uppercase text-center md:text-left">
             DESIGNED_FOR_PERFORMANCE // BUILT_WITH_PRECISION // © 2026
           </p>
