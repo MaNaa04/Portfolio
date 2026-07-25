@@ -119,8 +119,6 @@ export default async function GitHubSection() {
             blockSize={12}
             blockMargin={4}
             blockRadius={2}
-            hideTotalCount={true}
-            hideColorLegend={true}
           />
         </div>
         <RecentCommitsMarquee commits={commits} />
