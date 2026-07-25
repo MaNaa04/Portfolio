@@ -40,7 +40,7 @@ const projects: Project[] = [
     detailedDescription:
       "Architected a high-performance ingestion pipeline using JGit and GitHub APIs to analyze repositories at scale. Implemented Tree-sitter based function tracking and Redis caching to accelerate repository analysis and reduce LLM overhead.",
     tags: ["Spring Boot", "PostgreSQL", "Redis", "JGit", "Kafka"],
-    githubUrl: "https://github.com/MaNaa04/Codeon",
+    githubUrl: "https://github.com/ssrade/Code_Archaeology_System",
   },
 ];
 
