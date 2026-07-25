@@ -50,7 +50,7 @@ function ExperienceItem({ item }: { item: ExperienceItem }) {
         {item.mode && (
           <div className="mb-2">
             <span className="font-mono text-[11px] text-[#525252] tracking-wider uppercase">
-              // {item.mode}
+              {"//"} {item.mode}
             </span>
           </div>
         )}

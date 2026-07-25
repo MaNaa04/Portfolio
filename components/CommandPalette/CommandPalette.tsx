@@ -47,6 +47,7 @@ export default function CommandPalette() {
 
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery("");
       setSelectedIndex(0);
       setTimeout(() => inputRef.current?.focus(), 100);
@@ -136,6 +137,7 @@ export default function CommandPalette() {
     : actions;
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedIndex(0);
   }, [query]);
 

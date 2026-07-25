@@ -1,5 +1,5 @@
 import SectionHeading from "@/components/Common/SectionHeading";
-import { GraduationCap } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 interface EducationItem {
   period: string;

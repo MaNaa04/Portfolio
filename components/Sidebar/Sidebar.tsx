@@ -56,7 +56,7 @@ export default function Sidebar() {
     }, 3000);
 
     return () => clearInterval(roleInterval);
-  }, []);
+  }, [roles.length]);
 
   useEffect(() => {
     if (selectedAchievement) {
@@ -97,12 +97,14 @@ export default function Sidebar() {
   ];
 
   return (
+    <>
     <aside className="fixed left-0 top-0 w-[320px] h-screen bg-black/40 backdrop-blur-md flex flex-col overflow-y-auto z-50">
       <div className="flex flex-col flex-1 px-8 pt-8">
         {/* Avatar + Identity */}
         <div className="mb-6">
           {/* Avatar */}
-          <div className="w-24 h-24 rounded-full bg-[#1a1a1a] border border-[#222222] mb-7 overflow-hidden flex items-center justify-center relative">
+          <div className="relative w-24 h-24 rounded-2xl overflow-hidden mb-4 border border-[#222222] group">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/profile.jpg?v=1" 
               alt="Manas Pawar"
@@ -231,13 +233,15 @@ export default function Sidebar() {
                 href={item.href}
                 className="flex items-center gap-2 text-[#525252] hover:text-[#E5E5E5] transition-colors duration-200 font-outfit text-sm group"
               >
-                <span className="font-mono text-[#FF5C00] text-sm group-hover:text-[#FF5C00]">//</span>
+                <span className="font-mono text-[#FF5C00] text-sm group-hover:text-[#FF5C00]">{"//"}</span>
                 <span>{item.label}</span>
               </a>
             </li>
           ))}
         </ul>
       </nav>
+
+    </aside>
 
       {/* Achievement Toast */}
       <AnimatePresence>
@@ -346,6 +350,6 @@ export default function Sidebar() {
           </div>
         )}
       </AnimatePresence>
-    </aside>
+    </>
   );
 }

@@ -1,5 +1,5 @@
-import { GitHubCalendar } from 'react-github-calendar';
 import RecentCommitsMarquee from './RecentCommitsMarquee';
+import ClientGitHubCalendar from './ClientGitHubCalendar';
 
 async function fetchGitHubData(username: string) {
   try {
@@ -7,16 +7,16 @@ async function fetchGitHubData(username: string) {
     const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`, {
       next: { revalidate: 3600 },
     });
-    
+
     let repoCount = 0;
     let totalContributions = 0;
-    
+
     if (reposRes.ok) {
-      const repos = await reposRes.json();
+      const repos: { name: string }[] = await reposRes.json();
       repoCount = repos.length;
-      
+
       // Fetch commit counts for each repository in parallel
-      const commitPromises = repos.map(async (repo: any) => {
+      const commitPromises = repos.map(async (repo: { name: string }) => {
         try {
           const res = await fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`, {
             next: { revalidate: 3600 }
@@ -31,14 +31,14 @@ async function fetchGitHubData(username: string) {
               if (Array.isArray(commits)) return commits.length;
             }
           }
-        } catch (e) {
+        } catch {
           // ignore
         }
         return 0;
       });
-      
+
       const counts = await Promise.all(commitPromises);
-      totalContributions = counts.reduce((acc, count) => acc + count, 0);
+      totalContributions = counts.reduce((acc: number, count: number) => acc + count, 0);
     }
 
     // 3. Fetch search commits (recent public commits across all repos authored by the user)
@@ -52,10 +52,16 @@ async function fetchGitHubData(username: string) {
       }
     );
 
-    let commits: any[] = [];
+    interface GitHubCommit {
+      repository: { name: string };
+      commit: { message: string, author: { date: string } };
+      html_url: string;
+    }
+
+    let commits: { repo: string; message: string; time: string }[] = [];
     if (commitsRes.ok) {
       const searchData = await commitsRes.json();
-      commits = searchData.items.map((item: any) => {
+      commits = searchData.items.slice(0, 5).map((item: GitHubCommit) => {
         const diff = Math.floor(Date.now() / 1000) - new Date(item.commit.author.date).getTime() / 1000;
         let timeStr = "";
         if (diff < 3600) timeStr = `${Math.floor(diff / 60)} mins ago`;
@@ -111,7 +117,7 @@ export default async function GitHubSection() {
           GitHub
         </h4>
         <div className="overflow-x-auto pb-2 flex">
-          <GitHubCalendar
+          <ClientGitHubCalendar
             username={username}
             theme={customTheme}
             colorScheme="dark"

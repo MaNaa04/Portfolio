@@ -64,14 +64,14 @@ async function fetchLeetCodeData(username: string) {
       next: { revalidate: 3600 },
     });
 
-    const json = await res.json();
-    const user = json.data?.matchedUser;
-    const recent = json.data?.recentSubmissionList || [];
-    const contest = json.data?.userContestRanking;
+    const data = await res.json();
+    const user = data.data.matchedUser;
+    const recent = data.data.recentSubmissionList || [];
+    const contest = data.data.userContestRanking;
 
     let totalSolved = 0;
     if (user?.submitStats?.acSubmissionNum) {
-      const allStat = user.submitStats.acSubmissionNum.find((s: any) => s.difficulty === "All");
+      const allStat = user.submitStats.acSubmissionNum.find((s: { difficulty: string }) => s.difficulty === "All");
       if (allStat) totalSolved = allStat.count;
     }
 
@@ -79,10 +79,10 @@ async function fetchLeetCodeData(username: string) {
     const topPercentage = contest?.topPercentage ? contest.topPercentage.toFixed(1) : 0;
 
     // Process heatmap data
-    let heatmapData = new Array(LC_COLS * LC_ROWS).fill(0);
+    const heatmapData: number[] = new Array(LC_COLS * LC_ROWS).fill(0);
     let totalSubmissions = 0;
     if (user?.submissionCalendar) {
-      const calendar = JSON.parse(user.submissionCalendar);
+      const calendar: Record<string, number> = JSON.parse(user.submissionCalendar);
       const countsByDate: Record<string, number> = {};
       for (const [timestamp, count] of Object.entries(calendar)) {
         const date = new Date(parseInt(timestamp) * 1000).toDateString();
@@ -105,7 +105,7 @@ async function fetchLeetCodeData(username: string) {
     }
 
     // Process recent submissions
-    const submissions = recent.slice(0, 5).map((sub: any) => {
+    const submissions = recent.slice(0, 5).map((sub) => {
       // Calculate time ago
       const diff = Math.floor(Date.now() / 1000) - parseInt(sub.timestamp);
       let timeStr = "";
